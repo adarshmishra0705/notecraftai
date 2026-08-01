@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { UploadCloud, Settings, X, Key, Zap, Map, FileText } from 'lucide-react';
 import { useAppContext } from '../lib/context';
@@ -11,8 +11,6 @@ export default function Dashboard() {
     const [isDragging, setIsDragging] = useState(false);
     const [showSettings, setShowSettings] = useState(false);
     const [activeTab, setActiveTab] = useState('notes'); // 'notes' or 'roadmap'
-    
-    const fileInputRef = useRef(null);
 
     const isUploadDisabled = !isDemoMode && !apiKey;
 
@@ -134,20 +132,15 @@ export default function Dashboard() {
                             onDragOver={(e) => { e.preventDefault(); setIsDragging(true); }}
                             onDragLeave={() => setIsDragging(false)}
                             onDrop={handleDrop}
-                            onClick={() => {
-                                if (!isUploadDisabled && fileInputRef.current) {
-                                    fileInputRef.current.click();
-                                }
-                            }}
-                            className={`block cursor-pointer group border-8 border-brutal-black p-8 sm:p-16 text-center transition-all duration-300 relative overflow-hidden bg-white shadow-brutal active:bg-brutal-yellow ${isDragging ? 'bg-brutal-yellow translate-x-2 translate-y-2 shadow-brutal-sm' : 'md:hover:-translate-y-2 md:hover:-translate-x-2 md:hover:shadow-brutal-lg'} ${isUploadDisabled ? 'opacity-50 pointer-events-none cursor-default' : ''}`}
+                            className={`block group border-8 border-brutal-black p-8 sm:p-16 text-center transition-all duration-300 relative overflow-hidden bg-white shadow-brutal active:bg-brutal-yellow ${isDragging ? 'bg-brutal-yellow translate-x-2 translate-y-2 shadow-brutal-sm' : 'md:hover:-translate-y-2 md:hover:-translate-x-2 md:hover:shadow-brutal-lg'} ${isUploadDisabled ? 'opacity-50 pointer-events-none cursor-default' : ''}`}
                         >
                             <input 
                                 type="file"
                                 accept=".txt,.pdf"
                                 onChange={handleFileChange}
-                                className="sr-only"
+                                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-[100]"
                                 disabled={isUploadDisabled}
-                                ref={fileInputRef}
+                                style={{ display: 'block' }}
                             />
                             
                             <div className="relative z-10 w-20 h-20 sm:w-24 sm:h-24 bg-white border-4 border-brutal-black rounded-full flex items-center justify-center mx-auto mb-6 transition-all duration-300 shadow-brutal group-hover:bg-brutal-pink group-hover:rotate-12 pointer-events-none">
