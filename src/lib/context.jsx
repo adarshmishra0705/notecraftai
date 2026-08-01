@@ -8,7 +8,7 @@ export function AppProvider({ children }) {
     });
     const [isDemoMode, setIsDemoMode] = useState(() => {
         const stored = localStorage.getItem('demo_mode');
-        return stored !== null ? stored === 'true' : false;
+        return stored !== null ? stored === 'true' : true;
     });
     
     // Uploaded file data (in memory) to pass between Dashboard and Processing

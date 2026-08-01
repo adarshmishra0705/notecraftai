@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { UploadCloud, Settings, X, Key, Zap, Map, FileText } from 'lucide-react';
 import { useAppContext } from '../lib/context';
@@ -11,6 +11,8 @@ export default function Dashboard() {
     const [isDragging, setIsDragging] = useState(false);
     const [showSettings, setShowSettings] = useState(false);
     const [activeTab, setActiveTab] = useState('notes'); // 'notes' or 'roadmap'
+    
+    const fileInputRef = useRef(null);
 
     const isUploadDisabled = !isDemoMode && !apiKey;
 
@@ -128,36 +130,42 @@ export default function Dashboard() {
                             </div>
                         )}
 
-                        <label 
-                            htmlFor="file-upload-input"
+                        <div 
                             onDragOver={(e) => { e.preventDefault(); setIsDragging(true); }}
                             onDragLeave={() => setIsDragging(false)}
                             onDrop={handleDrop}
-                            className={`block cursor-pointer group border-8 border-brutal-black p-8 sm:p-16 text-center transition-all duration-300 relative overflow-hidden bg-white shadow-brutal active:bg-brutal-yellow ${isDragging ? 'bg-brutal-yellow translate-x-2 translate-y-2 shadow-brutal-sm' : 'md:hover:-translate-y-2 md:hover:-translate-x-2 md:hover:shadow-brutal-lg'} ${isUploadDisabled ? 'opacity-50 pointer-events-none cursor-default' : ''}`}
+                            onClick={() => {
+                                if (isUploadDisabled) {
+                                    setShowSettings(true);
+                                } else if (fileInputRef.current) {
+                                    fileInputRef.current.click();
+                                }
+                            }}
+                            className={`block cursor-pointer group border-8 border-brutal-black p-8 sm:p-16 text-center transition-all duration-300 relative overflow-hidden bg-white shadow-brutal active:bg-brutal-yellow ${isDragging ? 'bg-brutal-yellow translate-x-2 translate-y-2 shadow-brutal-sm' : 'md:hover:-translate-y-2 md:hover:-translate-x-2 md:hover:shadow-brutal-lg'} ${isUploadDisabled ? 'opacity-60 border-dashed' : ''}`}
                         >
                             <input 
-                                id="file-upload-input"
                                 type="file"
                                 accept=".txt,.pdf"
                                 onChange={handleFileChange}
-                                className="hidden"
+                                className="sr-only"
                                 disabled={isUploadDisabled}
+                                ref={fileInputRef}
                             />
                             
-                            <div className="relative w-20 h-20 sm:w-24 sm:h-24 bg-white border-4 border-brutal-black rounded-full flex items-center justify-center mx-auto mb-6 transition-all duration-300 shadow-brutal group-hover:bg-brutal-pink group-hover:rotate-12">
+                            <div className="relative w-20 h-20 sm:w-24 sm:h-24 bg-white border-4 border-brutal-black rounded-full flex items-center justify-center mx-auto mb-6 transition-all duration-300 shadow-brutal group-hover:bg-brutal-pink group-hover:rotate-12 pointer-events-none">
                                 <UploadCloud className="w-10 h-10 sm:w-12 sm:h-12 text-brutal-black" />
                             </div>
                             
-                            <h3 className="relative text-2xl sm:text-3xl font-black text-brutal-black mb-2 uppercase">Drop files here</h3>
-                            <p className="relative text-brutal-black font-bold mb-8 uppercase text-xs sm:text-sm border-2 border-brutal-black inline-block px-3 py-1 bg-brutal-bg">Supports PDF and TXT</p>
+                            <h3 className="relative text-2xl sm:text-3xl font-black text-brutal-black mb-2 uppercase pointer-events-none">Drop files here</h3>
+                            <p className="relative text-brutal-black font-bold mb-8 uppercase text-xs sm:text-sm border-2 border-brutal-black inline-block px-3 py-1 bg-brutal-bg pointer-events-none">Supports PDF and TXT</p>
                             
                             <br />
                             <div 
-                                className={`inline-block px-6 py-3 sm:px-8 sm:py-4 bg-brutal-blue border-4 border-brutal-black text-white font-black uppercase text-lg sm:text-xl shadow-brutal transition-all duration-300 w-full sm:w-auto ${isUploadDisabled ? 'opacity-50' : 'md:group-hover:bg-brutal-yellow md:group-hover:text-brutal-black'}`}
+                                className={`inline-block px-6 py-3 sm:px-8 sm:py-4 bg-brutal-blue border-4 border-brutal-black text-white font-black uppercase text-lg sm:text-xl shadow-brutal transition-all duration-300 w-full sm:w-auto pointer-events-none ${isUploadDisabled ? 'bg-slate-400' : 'md:group-hover:bg-brutal-yellow md:group-hover:text-brutal-black'}`}
                             >
-                                Browse Files
+                                {isUploadDisabled ? 'Configure API Key First' : 'Browse Files'}
                             </div>
-                        </label>
+                        </div>
                     </div>
                 )}
             </main>
