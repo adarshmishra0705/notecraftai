@@ -139,7 +139,7 @@ export default function Dashboard() {
                                     fileInputRef.current.click();
                                 }
                             }}
-                            className={`block cursor-pointer group border-8 border-brutal-black p-8 sm:p-16 text-center transition-all duration-300 relative overflow-hidden bg-white shadow-brutal ${isDragging ? 'bg-brutal-yellow translate-x-2 translate-y-2 shadow-brutal-sm' : 'hover:-translate-y-2 hover:-translate-x-2 hover:shadow-brutal-lg'} ${isUploadDisabled ? 'opacity-50 pointer-events-none cursor-default' : ''}`}
+                            className={`block cursor-pointer group border-8 border-brutal-black p-8 sm:p-16 text-center transition-all duration-300 relative overflow-hidden bg-white shadow-brutal active:bg-brutal-yellow ${isDragging ? 'bg-brutal-yellow translate-x-2 translate-y-2 shadow-brutal-sm' : 'md:hover:-translate-y-2 md:hover:-translate-x-2 md:hover:shadow-brutal-lg'} ${isUploadDisabled ? 'opacity-50 pointer-events-none cursor-default' : ''}`}
                         >
                             <input 
                                 type="file"
@@ -159,7 +159,7 @@ export default function Dashboard() {
                             
                             <br />
                             <div 
-                                className={`inline-block px-6 py-3 sm:px-8 sm:py-4 bg-brutal-blue border-4 border-brutal-black text-white font-black uppercase text-lg sm:text-xl shadow-brutal transition-all duration-300 w-full sm:w-auto pointer-events-none ${isUploadDisabled ? 'opacity-50' : 'group-hover:bg-brutal-yellow group-hover:text-brutal-black'}`}
+                                className={`inline-block px-6 py-3 sm:px-8 sm:py-4 bg-brutal-blue border-4 border-brutal-black text-white font-black uppercase text-lg sm:text-xl shadow-brutal transition-all duration-300 w-full sm:w-auto pointer-events-none ${isUploadDisabled ? 'opacity-50' : 'md:group-hover:bg-brutal-yellow md:group-hover:text-brutal-black'}`}
                             >
                                 Browse Files
                             </div>
