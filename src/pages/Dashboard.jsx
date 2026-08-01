@@ -163,7 +163,7 @@ export default function Dashboard() {
 
             {/* Settings Modal */}
             {showSettings && (
-                <div className="fixed inset-0 bg-brutal-black/40 backdrop-blur-sm z-50 flex items-center justify-center p-4 animation-fade-in">
+                <div className="fixed inset-0 bg-brutal-black/40 backdrop-blur-sm z-[100] flex items-center justify-center p-4 animation-fade-in">
                     <div className="bg-white border-4 border-brutal-black shadow-brutal-lg w-full max-w-md overflow-hidden relative">
                         <button onClick={() => setShowSettings(false)} className="absolute top-4 right-4 p-2 bg-white border-2 border-brutal-black shadow-brutal text-brutal-black hover:bg-brutal-yellow hover:translate-x-1 hover:translate-y-1 transition-all z-10">
                             <X className="w-5 h-5" />
