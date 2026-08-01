@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    background-color: #fff8f0;
+    color: #111111;
+    @apply overflow-x-hidden font-sans;
+  }
+  ::selection {
+    background-color: #00F0FF;
+    color: #111111;
+  }
+}
+
+@layer utilities {
+  .hero-bg {
+    background: url('data:image/svg+xml;utf8,<svg width="20" height="20" xmlns="http://www.w3.org/2000/svg"><circle cx="2" cy="2" r="1.5" fill="%23000000" opacity="0.1"/></svg>');
+  }
+  .card-shadow {
+    @apply shadow-brutal border-2 border-brutal-black transition-transform duration-200;
+  }
+  .card-shadow:hover {
+    @apply -translate-x-1 -translate-y-1 shadow-brutal-lg;
+  }
+}
