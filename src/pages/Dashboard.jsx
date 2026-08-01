@@ -128,35 +128,36 @@ export default function Dashboard() {
                             </div>
                         )}
 
-                        <div 
+                        <label 
+                            htmlFor="file-upload-input"
                             onDragOver={(e) => { e.preventDefault(); setIsDragging(true); }}
                             onDragLeave={() => setIsDragging(false)}
                             onDrop={handleDrop}
-                            className={`block group border-8 border-brutal-black p-8 sm:p-16 text-center transition-all duration-300 relative overflow-hidden bg-white shadow-brutal active:bg-brutal-yellow ${isDragging ? 'bg-brutal-yellow translate-x-2 translate-y-2 shadow-brutal-sm' : 'md:hover:-translate-y-2 md:hover:-translate-x-2 md:hover:shadow-brutal-lg'} ${isUploadDisabled ? 'opacity-50 pointer-events-none cursor-default' : ''}`}
+                            className={`block cursor-pointer group border-8 border-brutal-black p-8 sm:p-16 text-center transition-all duration-300 relative overflow-hidden bg-white shadow-brutal active:bg-brutal-yellow ${isDragging ? 'bg-brutal-yellow translate-x-2 translate-y-2 shadow-brutal-sm' : 'md:hover:-translate-y-2 md:hover:-translate-x-2 md:hover:shadow-brutal-lg'} ${isUploadDisabled ? 'opacity-50 pointer-events-none cursor-default' : ''}`}
                         >
                             <input 
+                                id="file-upload-input"
                                 type="file"
                                 accept=".txt,.pdf"
                                 onChange={handleFileChange}
-                                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-[100]"
+                                className="hidden"
                                 disabled={isUploadDisabled}
-                                style={{ display: 'block' }}
                             />
                             
-                            <div className="relative z-10 w-20 h-20 sm:w-24 sm:h-24 bg-white border-4 border-brutal-black rounded-full flex items-center justify-center mx-auto mb-6 transition-all duration-300 shadow-brutal group-hover:bg-brutal-pink group-hover:rotate-12 pointer-events-none">
+                            <div className="relative w-20 h-20 sm:w-24 sm:h-24 bg-white border-4 border-brutal-black rounded-full flex items-center justify-center mx-auto mb-6 transition-all duration-300 shadow-brutal group-hover:bg-brutal-pink group-hover:rotate-12">
                                 <UploadCloud className="w-10 h-10 sm:w-12 sm:h-12 text-brutal-black" />
                             </div>
                             
-                            <h3 className="relative z-10 text-2xl sm:text-3xl font-black text-brutal-black mb-2 uppercase pointer-events-none">Drop files here</h3>
-                            <p className="relative z-10 text-brutal-black font-bold mb-8 uppercase text-xs sm:text-sm border-2 border-brutal-black inline-block px-3 py-1 bg-brutal-bg pointer-events-none">Supports PDF and TXT</p>
+                            <h3 className="relative text-2xl sm:text-3xl font-black text-brutal-black mb-2 uppercase">Drop files here</h3>
+                            <p className="relative text-brutal-black font-bold mb-8 uppercase text-xs sm:text-sm border-2 border-brutal-black inline-block px-3 py-1 bg-brutal-bg">Supports PDF and TXT</p>
                             
                             <br />
                             <div 
-                                className={`inline-block px-6 py-3 sm:px-8 sm:py-4 bg-brutal-blue border-4 border-brutal-black text-white font-black uppercase text-lg sm:text-xl shadow-brutal transition-all duration-300 w-full sm:w-auto pointer-events-none ${isUploadDisabled ? 'opacity-50' : 'md:group-hover:bg-brutal-yellow md:group-hover:text-brutal-black'}`}
+                                className={`inline-block px-6 py-3 sm:px-8 sm:py-4 bg-brutal-blue border-4 border-brutal-black text-white font-black uppercase text-lg sm:text-xl shadow-brutal transition-all duration-300 w-full sm:w-auto ${isUploadDisabled ? 'opacity-50' : 'md:group-hover:bg-brutal-yellow md:group-hover:text-brutal-black'}`}
                             >
                                 Browse Files
                             </div>
-                        </div>
+                        </label>
                     </div>
                 )}
             </main>
