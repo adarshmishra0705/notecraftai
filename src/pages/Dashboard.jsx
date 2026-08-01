@@ -128,17 +128,17 @@ export default function Dashboard() {
                             </div>
                         )}
 
-                        <div 
+                        <label 
                             onDragOver={(e) => { e.preventDefault(); setIsDragging(true); }}
                             onDragLeave={() => setIsDragging(false)}
                             onDrop={handleDrop}
-                            className={`group border-8 border-brutal-black p-8 sm:p-16 text-center transition-all duration-300 relative overflow-hidden bg-white shadow-brutal ${isDragging ? 'bg-brutal-yellow translate-x-2 translate-y-2 shadow-brutal-sm' : 'hover:-translate-y-2 hover:-translate-x-2 hover:shadow-brutal-lg'} ${isUploadDisabled ? 'opacity-50 pointer-events-none' : ''}`}
+                            className={`block cursor-pointer group border-8 border-brutal-black p-8 sm:p-16 text-center transition-all duration-300 relative overflow-hidden bg-white shadow-brutal ${isDragging ? 'bg-brutal-yellow translate-x-2 translate-y-2 shadow-brutal-sm' : 'hover:-translate-y-2 hover:-translate-x-2 hover:shadow-brutal-lg'} ${isUploadDisabled ? 'opacity-50 pointer-events-none cursor-default' : ''}`}
                         >
                             <input 
                                 type="file"
                                 accept=".txt,.pdf"
                                 onChange={handleFileChange}
-                                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20"
+                                className="hidden"
                                 disabled={isUploadDisabled}
                             />
                             
@@ -150,13 +150,12 @@ export default function Dashboard() {
                             <p className="relative z-10 text-brutal-black font-bold mb-8 uppercase text-xs sm:text-sm border-2 border-brutal-black inline-block px-3 py-1 bg-brutal-bg">Supports PDF and TXT</p>
                             
                             <br />
-                            <button 
-                                disabled={isUploadDisabled}
-                                className="px-6 py-3 sm:px-8 sm:py-4 bg-brutal-blue border-4 border-brutal-black text-white font-black uppercase text-lg sm:text-xl shadow-brutal transition-all duration-300 disabled:opacity-50 relative pointer-events-none group-hover:bg-brutal-yellow group-hover:text-brutal-black w-full sm:w-auto"
+                            <div 
+                                className={`inline-block px-6 py-3 sm:px-8 sm:py-4 bg-brutal-blue border-4 border-brutal-black text-white font-black uppercase text-lg sm:text-xl shadow-brutal transition-all duration-300 w-full sm:w-auto ${isUploadDisabled ? 'opacity-50' : 'group-hover:bg-brutal-yellow group-hover:text-brutal-black'}`}
                             >
                                 Browse Files
-                            </button>
-                        </div>
+                            </div>
+                        </label>
                     </div>
                 )}
             </main>
