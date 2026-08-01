@@ -145,7 +145,7 @@ export default function Dashboard() {
                                 type="file"
                                 accept=".txt,.pdf"
                                 onChange={handleFileChange}
-                                className="hidden"
+                                className="sr-only"
                                 disabled={isUploadDisabled}
                                 ref={fileInputRef}
                             />
