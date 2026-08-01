@@ -197,21 +197,21 @@ ${text.substring(0, 15000)}
 
     if (!script && !isGenerating) {
         return (
-            <div className="w-full bg-brutal-cyan border-8 border-brutal-black p-10 text-center shadow-brutal rotate-1">
-                <div className="w-24 h-24 bg-white border-4 border-brutal-black rounded-full flex items-center justify-center mx-auto mb-6 shadow-brutal-sm">
-                    <Headphones className="w-12 h-12 text-brutal-black" />
+            <div className="w-full bg-brutal-cyan border-4 sm:border-8 border-brutal-black p-6 sm:p-10 text-center shadow-brutal rotate-1">
+                <div className="w-16 h-16 sm:w-24 sm:h-24 bg-white border-4 border-brutal-black rounded-full flex items-center justify-center mx-auto mb-6 shadow-brutal-sm">
+                    <Headphones className="w-8 h-8 sm:w-12 sm:h-12 text-brutal-black" />
                 </div>
-                <h3 className="text-3xl font-display font-black text-brutal-black mb-2 uppercase">Turn notes into a Podcast</h3>
-                <p className="text-brutal-black font-bold mb-8 max-w-md mx-auto bg-white p-2 border-2 border-brutal-black">
+                <h3 className="text-2xl sm:text-3xl font-display font-black text-brutal-black mb-2 uppercase">Turn notes into a Podcast</h3>
+                <p className="text-sm sm:text-base text-brutal-black font-bold mb-8 max-w-md mx-auto bg-white p-2 border-2 border-brutal-black">
                     Take a break from reading. Let AI synthesize a witty, 2-host audio podcast summarizing your material.
                 </p>
                 <button 
                     onClick={generatePodcast}
-                    className="px-8 py-4 bg-brutal-pink text-brutal-black border-4 border-brutal-black font-black uppercase shadow-brutal hover:shadow-brutal-sm hover:translate-x-1 hover:translate-y-1 hover:bg-brutal-yellow transition-all text-lg"
+                    className="px-6 py-3 sm:px-8 sm:py-4 bg-brutal-pink text-brutal-black border-4 border-brutal-black font-black uppercase shadow-brutal hover:shadow-brutal-sm hover:translate-x-1 hover:translate-y-1 hover:bg-brutal-yellow transition-all text-base sm:text-lg w-full sm:w-auto"
                 >
                     Generate Episode
                 </button>
-                {error && <p className="text-brutal-pink bg-brutal-black px-2 py-1 uppercase font-black mt-4 inline-block">{error}</p>}
+                {error && <p className="text-xs sm:text-sm text-brutal-pink bg-brutal-black px-2 py-1 uppercase font-black mt-4 inline-block">{error}</p>}
             </div>
         );
     }
@@ -227,42 +227,42 @@ ${text.substring(0, 15000)}
     }
 
     return (
-        <div className="w-full bg-white border-8 border-brutal-black shadow-brutal flex flex-col relative overflow-hidden -rotate-1">
-            <div className="relative z-10 p-8 flex items-center justify-between border-b-8 border-brutal-black bg-brutal-yellow">
-                <div className="flex items-center gap-4">
-                    <div className="w-16 h-16 bg-brutal-pink border-4 border-brutal-black rounded-full flex items-center justify-center shadow-brutal-sm -rotate-12">
-                        <Headphones className="w-8 h-8 text-brutal-black" />
+        <div className="w-full bg-white border-4 sm:border-8 border-brutal-black shadow-brutal flex flex-col relative overflow-hidden -rotate-1">
+            <div className="relative z-10 p-4 sm:p-8 flex flex-col sm:flex-row items-center justify-between border-b-4 sm:border-b-8 border-brutal-black bg-brutal-yellow gap-4 sm:gap-0">
+                <div className="flex items-center gap-3 sm:gap-4 w-full sm:w-auto">
+                    <div className="w-12 h-12 sm:w-16 sm:h-16 bg-brutal-pink border-4 border-brutal-black rounded-full flex items-center justify-center shadow-brutal-sm -rotate-12 shrink-0">
+                        <Headphones className="w-6 h-6 sm:w-8 sm:h-8 text-brutal-black" />
                     </div>
-                    <div>
-                        <h3 className="text-3xl font-display font-black text-brutal-black tracking-tighter uppercase">NoteCraft FM</h3>
-                        <p className="text-brutal-black font-bold uppercase bg-white px-2 py-0.5 border-2 border-brutal-black inline-block mt-1">Episode 1 • Your Notes</p>
+                    <div className="flex-1">
+                        <h3 className="text-xl sm:text-3xl font-display font-black text-brutal-black tracking-tighter uppercase line-clamp-1">NoteCraft FM</h3>
+                        <p className="text-[10px] sm:text-xs text-brutal-black font-bold uppercase bg-white px-2 py-0.5 border-2 border-brutal-black inline-block mt-1">Episode 1 • Your Notes</p>
                     </div>
                 </div>
                 
-                <div className="flex items-center gap-3">
+                <div className="flex items-center justify-center gap-3 w-full sm:w-auto">
                     {isPlaying ? (
-                        <button onClick={stopPodcast} className="p-4 bg-white border-4 border-brutal-black hover:bg-brutal-pink text-brutal-black transition-all shadow-brutal hover:shadow-brutal-sm hover:translate-x-1 hover:translate-y-1">
-                            <StopCircle className="w-8 h-8" />
+                        <button onClick={stopPodcast} className="p-3 sm:p-4 bg-white border-4 border-brutal-black hover:bg-brutal-pink text-brutal-black transition-all shadow-brutal hover:shadow-brutal-sm hover:translate-x-1 hover:translate-y-1 w-full sm:w-auto flex justify-center">
+                            <StopCircle className="w-6 h-6 sm:w-8 sm:h-8" />
                         </button>
                     ) : (
-                        <button onClick={playPodcast} className="p-4 bg-white border-4 border-brutal-black hover:bg-brutal-green text-brutal-black transition-all shadow-brutal hover:shadow-brutal-sm hover:translate-x-1 hover:translate-y-1">
-                            <Play className="w-8 h-8 ml-1" />
+                        <button onClick={playPodcast} className="p-3 sm:p-4 bg-white border-4 border-brutal-black hover:bg-brutal-green text-brutal-black transition-all shadow-brutal hover:shadow-brutal-sm hover:translate-x-1 hover:translate-y-1 w-full sm:w-auto flex justify-center">
+                            <Play className="w-6 h-6 sm:w-8 sm:h-8 ml-1" />
                         </button>
                     )}
                 </div>
             </div>
             
-            <div className="relative z-10 p-8 max-h-[500px] overflow-y-auto space-y-6 bg-brutal-bg">
+            <div className="relative z-10 p-4 sm:p-8 max-h-[400px] sm:max-h-[500px] overflow-y-auto space-y-4 sm:space-y-6 bg-brutal-bg">
                 {script?.map((line, idx) => {
                     const isActive = idx === currentLineIndex;
                     const isAlex = line.host === "Alex";
                     
                     return (
                         <div key={idx} className={`flex flex-col ${isAlex ? 'items-start' : 'items-end'} transition-opacity duration-300 ${isPlaying && !isActive ? 'opacity-40' : 'opacity-100'}`}>
-                            <span className={`text-xs font-black uppercase tracking-widest mb-1 px-3 py-1 border-2 border-brutal-black ${isAlex ? 'bg-brutal-cyan' : 'bg-brutal-pink'} text-brutal-black rotate-1`}>
+                            <span className={`text-[10px] sm:text-xs font-black uppercase tracking-widest mb-1 px-2 sm:px-3 py-1 border-2 border-brutal-black ${isAlex ? 'bg-brutal-cyan' : 'bg-brutal-pink'} text-brutal-black rotate-1`}>
                                 {line.host}
                             </span>
-                            <div className={`max-w-[80%] p-5 text-lg font-bold border-4 border-brutal-black shadow-brutal ${
+                            <div className={`max-w-[90%] sm:max-w-[80%] p-3 sm:p-5 text-sm sm:text-lg font-bold border-4 border-brutal-black shadow-brutal ${
                                 isActive 
                                     ? (isAlex ? 'bg-brutal-green text-brutal-black translate-x-1 translate-y-1 shadow-brutal-sm' : 'bg-brutal-yellow text-brutal-black translate-x-1 translate-y-1 shadow-brutal-sm')
                                     : 'bg-white text-brutal-black'
