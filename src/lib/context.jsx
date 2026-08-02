@@ -14,6 +14,16 @@ export function AppProvider({ children }) {
     // Uploaded file data (in memory) to pass between Dashboard and Processing
     const [uploadData, setUploadData] = useState(null);
 
+    // Saved decks from localStorage
+    const [savedDecks, setSavedDecks] = useState(() => {
+        const stored = localStorage.getItem('notecraft_saved_decks');
+        try {
+            return stored ? JSON.parse(stored) : [];
+        } catch (e) {
+            return [];
+        }
+    });
+
     useEffect(() => {
         localStorage.setItem('groq_api_key', apiKey);
     }, [apiKey]);
@@ -22,8 +32,12 @@ export function AppProvider({ children }) {
         localStorage.setItem('demo_mode', isDemoMode);
     }, [isDemoMode]);
 
+    useEffect(() => {
+        localStorage.setItem('notecraft_saved_decks', JSON.stringify(savedDecks));
+    }, [savedDecks]);
+
     return (
-        <AppContext.Provider value={{ apiKey, setApiKey, uploadData, setUploadData, isDemoMode, setIsDemoMode }}>
+        <AppContext.Provider value={{ apiKey, setApiKey, uploadData, setUploadData, isDemoMode, setIsDemoMode, savedDecks, setSavedDecks }}>
             {children}
         </AppContext.Provider>
     );

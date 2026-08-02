@@ -6,7 +6,7 @@ import { parseFileToText } from '../lib/parser';
 
 export default function Processing() {
     const navigate = useNavigate();
-    const { uploadData, apiKey, setUploadData, isDemoMode } = useAppContext();
+    const { uploadData, apiKey, setUploadData, isDemoMode, setSavedDecks } = useAppContext();
     const [step, setStep] = useState(0);
     const [error, setError] = useState(null);
     const processedRef = useRef(false);
@@ -53,15 +53,20 @@ export default function Processing() {
                         { id: 'd3', front: 'What file did you just upload in Demo Mode?', back: `You uploaded a file named: ${uploadData.name}`, easeFactor: 2.5, repetitions: 0, intervalDays: 0 }
                     ];
 
-                    setUploadData({ 
+                    const newDeck = { 
                         ...uploadData, 
+                        sessionId: Date.now().toString(),
+                        createdAt: new Date().toISOString(),
+                        rawText: text,
                         generatedCards: finalCards,
                         aiInsights: {
                             summary: "This is a demo summary of your uploaded document. It contains key insights and concepts designed to test the UI.",
                             difficulty: "Beginner",
                             tags: ["#demo", "#testing"]
                         }
-                    });
+                    };
+                    setUploadData(newDeck);
+                    setSavedDecks(prev => [newDeck, ...prev]);
                 } else {
                     // 2. Call Groq API via fetch (safe for browser)
                     const prompt = `You are an expert tutor. Analyze the following text and extract key educational flashcards and insights.
@@ -129,8 +134,10 @@ ${text.substring(0, 30000)}
                     }));
 
                     // Store in context to pass to Study view
-                    setUploadData({ 
+                    const newDeck = { 
                         ...uploadData, 
+                        sessionId: Date.now().toString(),
+                        createdAt: new Date().toISOString(),
                         rawText: text, // Saved for Podcast Mode
                         generatedCards: finalCards,
                         aiInsights: {
@@ -138,7 +145,9 @@ ${text.substring(0, 30000)}
                             difficulty: parsedObj.difficulty || "Intermediate",
                             tags: Array.isArray(parsedObj.tags) ? parsedObj.tags : []
                         }
-                    });
+                    };
+                    setUploadData(newDeck);
+                    setSavedDecks(prev => [newDeck, ...prev]);
                 }
                 
                 navigate('/app/study');

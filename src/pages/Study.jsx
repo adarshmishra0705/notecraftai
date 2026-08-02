@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import FlashcardStudyView from '../components/FlashcardStudyView';
 import PodcastView from '../components/PodcastView';
+import DocumentChat from '../components/DocumentChat';
 import { calculateSM2 } from '../lib/sm2';
-import { CheckCircle, Layers, Headphones } from 'lucide-react';
+import { CheckCircle, Layers, Headphones, MessageSquare, Download } from 'lucide-react';
 import { useAppContext } from '../lib/context';
 
 export default function Study() {
@@ -22,6 +23,20 @@ export default function Study() {
         }
         setCards(uploadData.generatedCards);
     }, [uploadData, navigate]);
+
+    const handleExportCSV = () => {
+        if (!cards || cards.length === 0) return;
+        const csvContent = "data:text/csv;charset=utf-8," 
+            + "Front,Back\n"
+            + cards.map(c => `"${c.front.replace(/"/g, '""')}","${c.back.replace(/"/g, '""')}"`).join("\n");
+        const encodedUri = encodeURI(csvContent);
+        const link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", `notecraft_flashcards.csv`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
 
     const handleReviewComplete = (card, quality) => {
         // Calculate new SM2 values
@@ -87,18 +102,24 @@ export default function Study() {
                 </div>
                 
                 {/* Mode Toggle */}
-                <div className="flex items-center bg-white border-4 border-brutal-black shadow-brutal-sm p-1 w-full sm:w-auto justify-center">
+                <div className="flex items-center bg-white border-4 border-brutal-black shadow-brutal-sm p-1 w-full sm:w-auto justify-center overflow-x-auto">
                     <button 
                         onClick={() => setActiveTab('flashcards')}
-                        className={`flex flex-1 sm:flex-none justify-center items-center gap-2 px-3 sm:px-4 py-2 text-xs sm:text-sm font-black transition-all uppercase ${activeTab === 'flashcards' ? 'bg-brutal-yellow text-brutal-black border-2 border-brutal-black' : 'text-brutal-black hover:bg-brutal-bg border-2 border-transparent'}`}
+                        className={`flex flex-1 sm:flex-none justify-center items-center gap-2 px-2 sm:px-4 py-2 text-xs sm:text-sm font-black transition-all uppercase ${activeTab === 'flashcards' ? 'bg-brutal-yellow text-brutal-black border-2 border-brutal-black' : 'text-brutal-black hover:bg-brutal-bg border-2 border-transparent'}`}
                     >
-                        <Layers className="w-4 h-4" /> <span>Flashcards</span>
+                        <Layers className="w-4 h-4 hidden sm:block" /> <span>Flashcards</span>
                     </button>
                     <button 
                         onClick={() => setActiveTab('podcast')}
-                        className={`flex flex-1 sm:flex-none justify-center items-center gap-2 px-3 sm:px-4 py-2 text-xs sm:text-sm font-black transition-all uppercase ${activeTab === 'podcast' ? 'bg-brutal-cyan text-brutal-black border-2 border-brutal-black' : 'text-brutal-black hover:bg-brutal-bg border-2 border-transparent'}`}
+                        className={`flex flex-1 sm:flex-none justify-center items-center gap-2 px-2 sm:px-4 py-2 text-xs sm:text-sm font-black transition-all uppercase ${activeTab === 'podcast' ? 'bg-brutal-cyan text-brutal-black border-2 border-brutal-black' : 'text-brutal-black hover:bg-brutal-bg border-2 border-transparent'}`}
                     >
-                        <Headphones className="w-4 h-4" /> <span>Podcast</span>
+                        <Headphones className="w-4 h-4 hidden sm:block" /> <span>Podcast</span>
+                    </button>
+                    <button 
+                        onClick={() => setActiveTab('chat')}
+                        className={`flex flex-1 sm:flex-none justify-center items-center gap-2 px-2 sm:px-4 py-2 text-xs sm:text-sm font-black transition-all uppercase ${activeTab === 'chat' ? 'bg-brutal-pink text-brutal-black border-2 border-brutal-black' : 'text-brutal-black hover:bg-brutal-bg border-2 border-transparent'}`}
+                    >
+                        <MessageSquare className="w-4 h-4 hidden sm:block" /> <span>Chat</span>
                     </button>
                 </div>
             </header>
@@ -113,13 +134,22 @@ export default function Study() {
                                     <span className="text-2xl bg-white text-brutal-black rounded-full w-8 h-8 flex items-center justify-center border-2 border-brutal-black -rotate-12">✨</span> 
                                     AI Overview
                                 </h4>
-                                <span className={`px-4 py-1 border-4 border-brutal-black text-sm font-black uppercase ${
-                                    uploadData.aiInsights.difficulty === 'Beginner' ? 'bg-brutal-green text-brutal-black' :
-                                    uploadData.aiInsights.difficulty === 'Intermediate' ? 'bg-brutal-yellow text-brutal-black' :
-                                    'bg-brutal-pink text-brutal-black'
-                                }`}>
-                                    {uploadData.aiInsights.difficulty} Level
-                                </span>
+                                <div className="flex items-center gap-2">
+                                    <button 
+                                        onClick={handleExportCSV}
+                                        className="hidden sm:flex items-center gap-2 px-3 py-1 bg-white text-brutal-black border-4 border-brutal-black text-sm font-black uppercase shadow-brutal-sm hover:translate-x-1 hover:translate-y-1 hover:bg-brutal-yellow transition-all"
+                                        title="Export to CSV"
+                                    >
+                                        <Download className="w-4 h-4" /> Export CSV
+                                    </button>
+                                    <span className={`px-4 py-1 border-4 border-brutal-black text-sm font-black uppercase ${
+                                        uploadData.aiInsights.difficulty === 'Beginner' ? 'bg-brutal-green text-brutal-black' :
+                                        uploadData.aiInsights.difficulty === 'Intermediate' ? 'bg-brutal-yellow text-brutal-black' :
+                                        'bg-brutal-pink text-brutal-black'
+                                    }`}>
+                                        {uploadData.aiInsights.difficulty} Level
+                                    </span>
+                                </div>
                             </div>
                             <p className="text-white font-bold text-lg leading-relaxed mb-4 bg-brutal-black p-3 border-l-4 border-brutal-yellow">
                                 {uploadData.aiInsights.summary}
@@ -136,13 +166,17 @@ export default function Study() {
                 )}
 
                 <div className="w-full">
-                    {activeTab === 'flashcards' ? (
+                    {activeTab === 'flashcards' && (
                         <FlashcardStudyView 
                             cards={cards.slice(reviewedCount)} 
                             onReviewComplete={handleReviewComplete} 
                         />
-                    ) : (
+                    )}
+                    {activeTab === 'podcast' && (
                         <PodcastView />
+                    )}
+                    {activeTab === 'chat' && (
+                        <DocumentChat />
                     )}
                 </div>
             </main>

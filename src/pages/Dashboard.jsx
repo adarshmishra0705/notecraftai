@@ -1,13 +1,13 @@
 import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { UploadCloud, Settings, X, Key, Zap, Map, FileText } from 'lucide-react';
+import { UploadCloud, Settings, X, Key, Zap, Map, FileText, Trash2, Play } from 'lucide-react';
 import { useAppContext } from '../lib/context';
 import RoadmapBuilder from '../components/RoadmapBuilder';
 import StudyBuddyWidget from '../components/StudyBuddyWidget';
 
 export default function Dashboard() {
     const navigate = useNavigate();
-    const { setUploadData, apiKey, setApiKey, isDemoMode, setIsDemoMode } = useAppContext();
+    const { setUploadData, apiKey, setApiKey, isDemoMode, setIsDemoMode, savedDecks, setSavedDecks } = useAppContext();
     const [isDragging, setIsDragging] = useState(false);
     const [showSettings, setShowSettings] = useState(false);
     const [activeTab, setActiveTab] = useState('notes'); // 'notes' or 'roadmap'
@@ -144,15 +144,16 @@ export default function Dashboard() {
                             <p className="text-brutal-black font-bold mb-6 sm:mb-8 uppercase text-xs sm:text-sm border-2 border-brutal-black inline-block px-3 py-1 bg-brutal-bg">Supports PDF and TXT</p>
                             
                             <div>
-                                <label 
-                                    htmlFor="file-upload-input"
+                                <button 
+                                    onClick={() => fileInputRef.current?.click()}
                                     className="px-6 py-3 sm:px-8 sm:py-4 bg-brutal-blue border-4 border-brutal-black text-white font-black uppercase text-base sm:text-xl shadow-brutal hover:bg-brutal-yellow hover:text-brutal-black active:translate-x-1 active:translate-y-1 transition-all cursor-pointer inline-flex items-center justify-center gap-3 w-full sm:w-auto"
                                 >
                                     <UploadCloud className="w-5 h-5 sm:w-6 sm:h-6" />
                                     <span>Browse Files</span>
-                                </label>
+                                </button>
                                 
                                 <input 
+                                    ref={fileInputRef}
                                     id="file-upload-input"
                                     type="file"
                                     accept=".txt,.pdf"
@@ -161,6 +162,43 @@ export default function Dashboard() {
                                 />
                             </div>
                         </div>
+
+                        {savedDecks && savedDecks.length > 0 && (
+                            <div className="mt-16 animation-fade-in text-left w-full max-w-4xl mx-auto">
+                                <h2 className="text-3xl font-display font-black text-brutal-black uppercase mb-8 inline-block bg-white px-4 py-2 border-4 border-brutal-black shadow-brutal-sm -rotate-1">Your Library</h2>
+                                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                                    {savedDecks.map((deck) => (
+                                        <div key={deck.sessionId} className="bg-white border-4 border-brutal-black p-5 shadow-brutal hover:shadow-brutal-sm hover:translate-y-1 hover:translate-x-1 transition-all flex flex-col relative group">
+                                            <button 
+                                                onClick={(e) => { e.stopPropagation(); setSavedDecks(prev => prev.filter(d => d.sessionId !== deck.sessionId)) }}
+                                                className="absolute -top-3 -right-3 p-2 bg-brutal-pink border-4 border-brutal-black shadow-brutal-sm hover:bg-brutal-black hover:text-white transition-colors z-10 opacity-0 group-hover:opacity-100"
+                                                title="Delete session"
+                                            >
+                                                <Trash2 className="w-5 h-5" />
+                                            </button>
+                                            
+                                            <div className="flex-1">
+                                                <h3 className="font-black text-brutal-black text-lg mb-3 truncate pr-4" title={deck.name || 'Untitled Document'}>{deck.name || 'Untitled Document'}</h3>
+                                                
+                                                <div className="flex flex-wrap gap-2 mb-6">
+                                                    <span className="text-xs font-bold bg-brutal-cyan border-2 border-brutal-black px-2 py-1 uppercase">{deck.generatedCards?.length || 0} Cards</span>
+                                                    <span className="text-xs font-bold bg-brutal-bg border-2 border-brutal-black px-2 py-1 uppercase">
+                                                        {new Date(deck.createdAt).toLocaleDateString()}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            
+                                            <button 
+                                                onClick={() => { setUploadData(deck); navigate('/app/study'); }}
+                                                className="w-full py-3 bg-brutal-blue text-white border-4 border-brutal-black font-black uppercase flex items-center justify-center gap-2 hover:bg-brutal-yellow hover:text-brutal-black transition-colors shadow-brutal-sm active:translate-y-1 active:translate-x-1 active:shadow-none"
+                                            >
+                                                <Play className="w-5 h-5 fill-current" /> Resume
+                                            </button>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
                     </div>
                 )}
             </main>

@@ -172,7 +172,7 @@ export default function LandingPage() {
                                 A <span className="text-brutal-yellow bg-brutal-black px-2 shadow-brutal inline-block rotate-2">Dynamic</span><br/>Study Experience
                             </h2>
                             <p className="text-2xl text-brutal-black mb-10 leading-relaxed font-bold border-l-8 border-brutal-black pl-4">
-                                Dive into a bold, interactive workspace. Smart Flashcards, interactive Study Roadmaps, an AI Study Buddy, and a hands-free Podcast Mode working in perfect harmony.
+                                Dive into a bold, interactive workspace. Smart Flashcards, interactive Study Roadmaps, an AI Nerd Bot, and a hands-free Podcast Mode working in perfect harmony.
                             </p>
                             <Link to="/app" className="px-8 py-4 bg-brutal-pink text-brutal-black font-black uppercase text-xl border-4 border-brutal-black shadow-brutal hover:shadow-brutal-sm hover:translate-x-1 hover:translate-y-1 transition-all inline-flex items-center gap-2 group">
                                 Try It Right Now
